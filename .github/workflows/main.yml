@@ -5,6 +5,7 @@ on:
     paths:
       - "app/**"
       - "hello-world/**"
+      -  "main.yaml"
 
 jobs:
   build:
@@ -51,11 +52,7 @@ jobs:
           version: 3.7.0
 
       - name: Deploy Helm chart
-        uses: azure/k8s-deploy-helm@v1
-        with:
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          helm_chart: 'hello-world/**'
-          release_name: 'git-release'
-          values: |
-            image.repository=${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/hello-world
-            image.tag=${{ github.sha }}
+        run: |
+          helm upgrade --install hello-world hello-world \
+          --namespace git-actions-ns \
+          --set image.repository=${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/hello-world,image.tag=${{ github.sha }}
