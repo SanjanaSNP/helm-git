@@ -5,7 +5,7 @@ on:
     paths:
       - "app/**"
       - "hello-world/**"
-      -  "main.yaml"
+      - "main.yaml"
 
 jobs:
   build:
@@ -29,6 +29,11 @@ jobs:
           branch: main
           tag: ${{ github.sha }}
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Azure login
         id: login
         uses: azure/login@v1.4.3
@@ -42,10 +47,6 @@ jobs:
           resource-group: '${{ secrets.resource_group }}' 
           cluster-name: '${{ secrets.cluster_name }}'
 
-      - name: Setup kubectl
-        id: install-kubectl
-        uses: azure/setup-kubectl@v3
-
       - name: Helm tool installer
         uses: Azure/setup-helm@v3
         with:
@@ -55,4 +56,4 @@ jobs:
         run: |
           helm upgrade --install hello-world hello-world \
           --namespace git-actions-ns \
-          --set image.repository=${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/hello-world,image.tag=${{ github.sha }}
+          --set image.repository=${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/hello-world,image.tag=${{ github.sha }},changeCause=${{ github.sha }}
