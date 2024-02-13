@@ -67,3 +67,9 @@ jobs:
           helm upgrade --install hello-world hello-world \
           --namespace git-actions-ns \
           --set image.repository=${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/hello-world,image.tag=${{ github.sha }},changeCause=${{ github.sha }}
+          arguments: '--create-namespace --atomic --cleanup-on-fail'
+  
+
+
+
+
