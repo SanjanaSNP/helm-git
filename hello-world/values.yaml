@@ -26,4 +26,4 @@ service:
   type: ClusterIP
   port: 80
 
-changeCause: git-hello
+changeCause: git-actions-hello
