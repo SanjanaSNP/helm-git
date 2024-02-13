@@ -68,10 +68,10 @@ jobs:
           --namespace git-actions-ns \
           --set image.repository=${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/hello-world,image.tag=${{ github.sha }},changeCause=${{ github.sha }}
 
-      # - name: Helm Rollback
-      #   if: failure()
-      #   run: |
-      #     helm rollback hello-world --namespace git-actions-ns
+      - name: Helm Rollback
+        if: failure()
+        run: |
+          helm rollback hello-world --namespace git-actions-ns
           
   
 
