@@ -67,7 +67,7 @@ jobs:
           helm upgrade --install hello-world hello-world \
           --namespace git-actions-ns \
           --set image.repository=${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/hello-world,image.tag=${{ github.sha }},changeCause=${{ github.sha }}
-           --atomic 
+           --atomic \
            --cleanup-on-fail
       # - name: Helm Rollback
       #   if: failure()
