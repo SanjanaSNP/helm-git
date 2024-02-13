@@ -69,7 +69,7 @@ jobs:
       #   if: failure()
       #   run: |
       #     helm rollback hello-world --namespace git-actions-ns
-          
+          # helm
   
 
 
