@@ -26,12 +26,24 @@ jobs:
           folder: app
           branch: main
           tag: ${{ github.sha }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-artifacts
+          path: |
+            app
+            hello-world
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: built-artifacts
+          
       - name: Azure login
         id: login
         uses: azure/login@v1.4.3
