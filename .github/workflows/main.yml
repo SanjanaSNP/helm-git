@@ -2,10 +2,8 @@ name: build_deploy_aks
 
 on:
   push:
-    paths:
-      - "app/**"
-      - "hello-world/**"
-      - "main.yaml"
+    branches:
+      - main
 
 jobs:
   build:
